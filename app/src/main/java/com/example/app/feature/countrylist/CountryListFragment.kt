@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.example.ui.compose.theme.AppBrandTheme
+import org.koin.android.ext.android.inject
 
 class CountryListFragment : Fragment() {
+
+    private val viewModel: CountryListViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,9 +21,10 @@ class CountryListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 AppBrandTheme {
-                    Text(text = "Hello World")
+                    CountryListScreen()
                 }
             }
+            viewModel.getCountryList()
         }
     }
 }
