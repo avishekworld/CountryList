@@ -1,0 +1,8 @@
+rootProject.name = "CountryList"
+include ':domain'
+include ':data'
+include ':uikit-compose'
+project(':uikit-compose').projectDir = new File(rootProject.projectDir, '/uikit/uikit-compose')
+include ':uikit-xml'
+project(':uikit-xml').projectDir = new File(rootProject.projectDir, '/uikit/uikit-xml')
+include ':app'

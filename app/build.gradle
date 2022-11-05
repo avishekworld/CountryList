@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+android {
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion = build_tool_version
+
+    defaultConfig {
+        applicationId "com.example.app"
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            useIR = true
+            freeCompilerArgs += [
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+            ]
+        }
+
+        buildFeatures {
+            viewBinding true
+            dataBinding true
+            compose true
+        }
+
+        composeOptions {
+            kotlinCompilerExtensionVersion = "$jetpack_compose_version"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /**
+     * Fix for kotlin coroutines
+     */
+    packagingOptions {
+        exclude 'META-INF/proguard/coroutines.pro'
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project (":domain")
+    implementation project (":data")
+    implementation project (":uikit-compose")
+
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.fragment:fragment-ktx:$androidx_fragment_version"
+    implementation "com.google.android.material:material:$android_material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.annotation:annotation:$androidx_annotation_version"
+    implementation "androidx.preference:preference-ktx:$androidx_preference_ktx_version"
+    implementation "androidx.cardview:cardview:$card_layout_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version"
+
+    // Dependency Injection
+    implementation "io.insert-koin:koin-androidx-viewmodel:$koin_version"
+
+    /*third party library*/
+    implementation 'androidx.lifecycle:lifecycle-process:2.3.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "androidx.test:core:$androidx_test_core_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+
+    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+}

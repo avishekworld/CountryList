@@ -1,0 +1,85 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    //sdk build min_sdk target_sdk
+    ext.compile_sdk_version = 31
+    ext.build_tool_version = "31.0.0"
+    ext.min_sdk_version = 27
+    ext.target_sdk_version = 31
+    ext.build_gradle_version = '7.2.1'
+    ext.gradle_secret_plugin_version = "2.0.1"
+
+    //kotlin
+    ext.kotlin_version = "1.6.10"
+    ext.kotlin_coroutine_version = "1.6.3"
+
+    //androidx
+    ext.androidx_core_ktx_version = "1.8.0"
+    ext.androidx_appcompat_version = "1.4.2"
+    ext.android_material_version = '1.2.1'
+    ext.androidx_lifecycle_version = "2.5.0"
+    ext.androidx_fragment_version = "1.4.1"
+    ext.constraint_layout_version = "2.0.4"
+    ext.androidx_navigation_version = "2.4.2"
+    ext.androidx_preference_ktx_version = "1.2.0"
+    ext.androidx_annotation_version = "1.4.0"
+    ext.card_layout_version = "1.0.0"
+    ext.lifecycle_version = "2.2.0"
+    ext.fragment_ktx_version = "1.2.5"
+
+    // jetpack compose
+    ext.jetpack_compose_version = "1.1.1"
+    ext.jetpack_compose_accompanist_version = "0.23.1"
+    ext.jetpack_compose_material_dialog_version = "0.7.2"
+    ext.jetpack_compose_lifecycle_version = "2.5.0"
+
+    //Lint
+    ext.ktlint_version = "10.2.1"
+
+    /*third party library*/
+    ext.koin_version = "2.2.3"
+    ext.okhttp_version = "4.9.0"
+    ext.retrofit_version = "2.9.0"
+    ext.moshi_version = "1.12.0"
+
+    /*Test libraries*/
+    ext.mockk_version = '1.10.3-jdk8'
+    ext.junit_version = '4.12'
+    ext.androidx_test_core_version = '1.3.0'
+    ext.androidx_test_ext_version = '1.1.0'
+    ext.espresso_version = '3.2.0'
+
+    repositories {
+        google()
+        jcenter()
+
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:$build_gradle_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$androidx_navigation_version"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlint_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id("org.jlleitschuh.gradle.ktlint") version "$ktlint_version"
+    id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

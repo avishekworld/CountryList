@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion compile_sdk_version
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+        freeCompilerArgs += [
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+        ]
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "$jetpack_compose_version"
+    }
+}
+
+dependencies {
+    // Compose
+    api "androidx.compose.ui:ui:$jetpack_compose_version"
+    api "androidx.compose.foundation:foundation:$jetpack_compose_version"
+    api "androidx.compose.runtime:runtime:$jetpack_compose_version"
+    api "androidx.compose.material:material:$jetpack_compose_version"
+    api "androidx.lifecycle:lifecycle-viewmodel-compose:$jetpack_compose_lifecycle_version"
+    api "androidx.compose.runtime:runtime-livedata:$jetpack_compose_version"
+    api "androidx.compose.ui:ui-tooling:$jetpack_compose_version"
+    api "androidx.compose.ui:ui-tooling-preview:$jetpack_compose_version"
+    api "com.google.accompanist:accompanist-insets:$jetpack_compose_accompanist_version"
+    api "io.github.vanpra.compose-material-dialogs:datetime:$jetpack_compose_material_dialog_version"
+}
