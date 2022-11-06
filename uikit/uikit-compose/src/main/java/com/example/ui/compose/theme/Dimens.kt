@@ -20,4 +20,6 @@ fun Modifier.paddingVerticalSmall() = padding(vertical = smallDimen)
 fun Modifier.paddingVerticalSmallest() = padding(vertical = smallestDimen)
 
 fun Modifier.paddingStartMedium() = padding(start = mediumDimen)
+fun Modifier.paddingStartSmall() = padding(start = smallDimen)
 fun Modifier.paddingEndMedium() = padding(end = mediumDimen)
+fun Modifier.paddingEndSmall() = padding(end = smallDimen)

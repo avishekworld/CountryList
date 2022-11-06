@@ -1,5 +1,6 @@
 package com.example.app.feature.countrylist
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,10 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.app.R
 import com.example.app.view.core.ViewState
 import com.example.domain.country.Country
+import com.example.ui.compose.theme.AppBrandTheme
 import com.example.ui.compose.theme.paddingHorizontalMedium
 import com.example.ui.compose.theme.paddingVerticalSmall
 import com.example.ui.compose.theme.paddingVerticalSmallest
@@ -108,5 +111,29 @@ private fun Error(onRetryClicked: () -> Unit) {
         Button(onClick = onRetryClicked) {
             Text(text = stringResource(id = R.string.try_again))
         }
+    }
+}
+
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+fun UITopBarPreview() {
+    AppBrandTheme {
+        CountryListScreen(
+            viewState = CountryListViewState(
+                countryList = listOf(
+                    Country(
+                        name = "USA",
+                        region = "NA",
+                        code = "US",
+                        capital = "Washington DC"
+                    )
+                )
+            ),
+            onRetryClicked = {}
+        )
     }
 }
