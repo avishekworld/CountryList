@@ -20,7 +20,7 @@ class CountryRepositoryImpl(
             if (request.forceRefresh) {
                 when (val result = countryApi.getCountryList(request)) {
                     is Result.Success -> {
-                        cache.save(result.t)
+                        cache.save(result.data)
                         result
                     }
                     is Result.Failure -> result

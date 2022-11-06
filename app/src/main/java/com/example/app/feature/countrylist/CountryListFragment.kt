@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.example.ui.compose.theme.AppBrandTheme
@@ -20,8 +21,14 @@ class CountryListFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
+                val viewState = viewModel.viewState.collectAsState()
                 AppBrandTheme {
-                    CountryListScreen()
+                    CountryListScreen(
+                        viewState = viewState.value,
+                        onRetryClicked = {
+                            viewModel.handleEvent(CountryListViewEvent.RetryClicked)
+                        }
+                    )
                 }
             }
             viewModel.getCountryList()
