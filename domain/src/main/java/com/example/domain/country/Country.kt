@@ -1,8 +1,21 @@
 package com.example.domain.country
 
+import com.example.domain.core.CountryGroupMapper
 import com.example.domain.core.Result
 import com.example.domain.core.SuspendUseCase
 
+class GetCountryAsGroupUseCase(
+    private val getCountryListUseCase: GetCountryListUseCase,
+    private val countryGroupMapper: CountryGroupMapper
+) :
+    SuspendUseCase<CountryRequest, Result<CountryGroupList>> {
+    override suspend fun run(request: CountryRequest): Result<CountryGroupList> {
+        return when (val countryListResult = getCountryListUseCase.run(request)) {
+            is Result.Success -> Result.Success(countryGroupMapper.map(countryListResult.data))
+            is Result.Failure -> Result.Failure(countryListResult.error)
+        }
+    }
+}
 /**
  * Get Country List UseCase
  */
@@ -42,6 +55,15 @@ data class Country(
             capital.isNotBlank()
     }
 }
+
+data class CountryGroupList(
+    val groupList: List<CountryGroup> = emptyList()
+)
+
+data class CountryGroup(
+    val groupName: String = "",
+    val countryList: List<Country> = emptyList()
+)
 
 /**
  * Country Request

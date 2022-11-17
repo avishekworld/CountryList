@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.app.R
 import com.example.app.view.core.ViewState
 import com.example.domain.country.Country
+import com.example.domain.country.CountryGroupList
 import com.example.ui.compose.theme.AppBrandTheme
 import com.example.ui.compose.theme.paddingHorizontalMedium
 import com.example.ui.compose.theme.paddingVerticalSmall
@@ -53,6 +54,10 @@ fun CountryListScreen(
 }
 
 @Composable
+private fun CountryGroupList(countryGroupList: CountryGroupList) {
+}
+
+@Composable
 private fun CountryList(countryList: List<Country>) {
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
@@ -65,6 +70,7 @@ private fun CountryList(countryList: List<Country>) {
 }
 
 @Composable
+// TODO check how to insert and identify an item like recylcer view
 private fun CountryItem(country: Country) {
     Card(
         modifier = Modifier

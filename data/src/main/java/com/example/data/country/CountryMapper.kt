@@ -1,6 +1,6 @@
 package com.example.data.country
 
-import com.example.data.core.Mapper
+import com.example.domain.core.Mapper
 import com.example.domain.country.Country
 
 /**

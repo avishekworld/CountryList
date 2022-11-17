@@ -1,4 +1,4 @@
-package com.example.data.core
+package com.example.domain.core
 
 /**
  * Mapper

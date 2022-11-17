@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.app.view.core.ViewState
 import com.example.domain.core.Result
 import com.example.domain.country.Country
+import com.example.domain.country.CountryGroupList
 import com.example.domain.country.CountryRequest
 import com.example.domain.country.GetCountryListUseCase
 import com.example.domain.logger.Logger
@@ -117,6 +118,7 @@ sealed class CountryListViewEvent {
  */
 data class CountryListViewState(
     val countryList: List<Country> = emptyList(),
+    val countryGroupList: CountryGroupList = CountryGroupList(),
     val errorViewState: ViewState = ViewState.Hide,
     val processingViewState: ViewState = ViewState.Hide
 )
