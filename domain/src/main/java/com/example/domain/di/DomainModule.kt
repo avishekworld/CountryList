@@ -2,6 +2,7 @@ package com.example.domain.di
 
 import com.example.domain.core.AppCoroutineDispatchers
 import com.example.domain.core.CoroutineDispatchers
+import com.example.domain.core.CountryGroupMapper
 import com.example.domain.country.GetCountryAsGroupUseCase
 import com.example.domain.country.GetCountryListUseCase
 import com.example.domain.logger.Logger
@@ -22,6 +23,10 @@ val domainModule = module {
         GetCountryListUseCase(
             countryRepository = get()
         )
+    }
+
+    single {
+        CountryGroupMapper()
     }
 
     single<CoroutineDispatchers> {

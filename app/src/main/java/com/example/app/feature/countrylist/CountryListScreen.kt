@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +26,7 @@ import com.example.domain.country.Country
 import com.example.domain.country.CountryGroupList
 import com.example.ui.compose.theme.AppBrandTheme
 import com.example.ui.compose.theme.paddingHorizontalMedium
+import com.example.ui.compose.theme.paddingStartMedium
 import com.example.ui.compose.theme.paddingVerticalSmall
 import com.example.ui.compose.theme.paddingVerticalSmallest
 import com.example.ui.compose.widget.ProcessingView
@@ -46,7 +48,7 @@ fun CountryListScreen(
         if (viewState.errorViewState is ViewState.Show) {
             Error(onRetryClicked = onRetryClicked)
         } else {
-            CountryList(countryList = viewState.countryList)
+            CountryGroupList(countryGroupList = viewState.countryGroupList)
         }
     }
 
@@ -55,6 +57,21 @@ fun CountryListScreen(
 
 @Composable
 private fun CountryGroupList(countryGroupList: CountryGroupList) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        LazyColumn {
+            countryGroupList.groupList.forEach { countryGroup ->
+
+                item {
+                    CountryGroupHeader(countryGroup.groupName)
+                }
+
+                items(countryGroup.countryList) { country ->
+                    CountryItem(country = country)
+                    UISpacer(modifier = Modifier.paddingVerticalSmallest())
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -66,6 +83,20 @@ private fun CountryList(countryList: List<Country>) {
                 UISpacer(modifier = Modifier.paddingVerticalSmallest())
             }
         }
+    }
+}
+
+@Composable
+private fun CountryGroupHeader(header: String) {
+    Row(
+        modifier = Modifier
+            .defaultMinSize(minHeight = 50.dp)
+    ) {
+        Text(
+            modifier = Modifier.paddingStartMedium(),
+            style = MaterialTheme.typography.h4,
+            text = header
+        )
     }
 }
 

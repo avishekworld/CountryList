@@ -11,9 +11,22 @@ class GetCountryAsGroupUseCase(
     SuspendUseCase<CountryRequest, Result<CountryGroupList>> {
     override suspend fun run(request: CountryRequest): Result<CountryGroupList> {
         return when (val countryListResult = getCountryListUseCase.run(request)) {
-            is Result.Success -> Result.Success(countryGroupMapper.map(countryListResult.data))
+            is Result.Success -> Result.Success(
+                data = sortByGroupName(
+                    countryGroupList = countryGroupMapper.map(countryListResult.data)
+                )
+            )
             is Result.Failure -> Result.Failure(countryListResult.error)
         }
+    }
+
+    // TODO put into a util or usecase
+    private fun sortByGroupName(countryGroupList: CountryGroupList): CountryGroupList {
+        return countryGroupList.copy(
+            groupList = countryGroupList.groupList.sortedBy {
+                it.groupName
+            }
+        )
     }
 }
 /**

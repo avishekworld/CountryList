@@ -1,5 +1,6 @@
 package com.example.app.feature.countrylist
 
+import android.text.TextUtils.isEmpty
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.app.view.core.ViewState
@@ -7,7 +8,7 @@ import com.example.domain.core.Result
 import com.example.domain.country.Country
 import com.example.domain.country.CountryGroupList
 import com.example.domain.country.CountryRequest
-import com.example.domain.country.GetCountryListUseCase
+import com.example.domain.country.GetCountryAsGroupUseCase
 import com.example.domain.logger.Logger
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,11 +23,11 @@ import kotlinx.coroutines.launch
  * Country List ViewModel
  */
 class CountryListViewModel(
-    private val getCountryListUseCase: GetCountryListUseCase,
+    private val getCountryAsGroupUseCase: GetCountryAsGroupUseCase,
     private val logger: Logger
 ) : ViewModel() {
 
-    private val internalViewState = MutableStateFlow<CountryListViewState>(CountryListViewState())
+    private val internalViewState = MutableStateFlow(CountryListViewState())
     val viewState: StateFlow<CountryListViewState>
         get() = internalViewState
 
@@ -79,14 +80,14 @@ class CountryListViewModel(
                     processingViewState = ViewState.Show
                 )
             )
-            val countryListResult = getCountryListUseCase.run(
+            val countryGroupListResult = getCountryAsGroupUseCase.run(
                 request = CountryRequest(forceRefresh = true)
             )
-            when (countryListResult) {
+            when (countryGroupListResult) {
                 is Result.Success -> updateViewState(
                     viewState.value.copy(
-                        countryList = countryListResult.data,
-                        errorViewState = if (countryListResult.data.isEmpty()) ViewState.Show else ViewState.Hide,
+                        countryGroupList = countryGroupListResult.data,
+                        errorViewState = if (countryGroupListResult.data.groupList.isEmpty()) ViewState.Show else ViewState.Hide,
                         processingViewState = ViewState.Hide
                     )
                 )

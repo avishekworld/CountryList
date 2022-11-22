@@ -9,7 +9,7 @@ val appModule = module {
 
     viewModel {
         CountryListViewModel(
-            getCountryListUseCase = get(),
+            getCountryAsGroupUseCase = get(),
             logger = get()
         )
     }
